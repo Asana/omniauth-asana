@@ -21,23 +21,21 @@ module OmniAuth
         end
       end
 
-      uid { raw_info['global_id'].to_s }
+      uid { raw_info['id'].to_s }
 
       info do
         {
-          'user_id' => raw_info['global_id']
+          'name' => raw_info['name'],
+          'email' => raw_info['email']
         }
       end
 
       extra do
-        {
-          :raw_info => raw_info
-        }
+        { :raw_info => raw_info }
       end
 
       def raw_info
-        access_token.options[:mode] = :query
-        @raw_info ||= access_token.get('user').parsed
+        @raw_info ||= access_token.params['data']
       end
     end
   end
