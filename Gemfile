@@ -4,8 +4,15 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'rspec'
+  gem 'rake'
+  gem 'minitest'
+  gem 'minitest-spec-context'
+  gem 'minitest-reporters'
+  gem "minitest-focus"
   gem 'rack-test'
   gem 'webmock'
   gem 'simplecov'
+  gem 'guard' 
+  gem 'guard-minitest'
+  gem 'rubocop'
 end

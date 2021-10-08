@@ -4,9 +4,9 @@ module OmniAuth
   module Strategies
     class Asana < OmniAuth::Strategies::OAuth2
       option :client_options, {
-        :site => 'https://app.asana.com',
-        :authorize_url => 'https://app.asana.com/-/oauth_authorize',
-        :token_url => 'https://app.asana.com/-/oauth_token'
+        site: 'https://app.asana.com',
+        authorize_url: 'https://app.asana.com/-/oauth_authorize',
+        token_url: 'https://app.asana.com/-/oauth_token'
       }
 
       def request_phase
@@ -15,9 +15,7 @@ module OmniAuth
 
       def authorize_params
         super.tap do |params|
-          if request.params['client_options']
-            params[:client_options] = request.params['client_options']
-          end
+          params[:client_options] = request.params['client_options'] if request.params['client_options']
         end
       end
 
@@ -31,7 +29,7 @@ module OmniAuth
       end
 
       extra do
-        { :raw_info => raw_info }
+        { raw_info: raw_info }
       end
 
       def raw_info
@@ -39,7 +37,7 @@ module OmniAuth
       end
 
       def callback_url
-        options[:redirect_uri] || (full_host + script_name + callback_path)
+        options[:redirect_uri] || (full_host + callback_path)
       end
     end
   end
