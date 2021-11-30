@@ -1,11 +1,16 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 # Specify your gem's dependencies in omniauth-asana.gemspec
 gemspec
 
 group :development, :test do
-  gem 'rspec'
-  gem 'rack-test'
-  gem 'webmock'
-  gem 'simplecov'
+  gem "rack-test"
+  gem "rspec"
+  gem "simplecov"
+  gem "webmock"
+end
+
+group :test do
+  gem "rubocop", ">= 1.0"
+  gem "rubocop-rspec"
 end
