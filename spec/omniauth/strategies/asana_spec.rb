@@ -1,40 +1,40 @@
-require 'spec_helper'
+# rubocop:disable Metrics/BlockLength
+require "spec_helper"
 
 describe OmniAuth::Strategies::Asana do
-  let(:access_token) { instance_double('AccessToken', :options => {}) }
-  # let(:parsed_response) { instance_double('ParsedResponse') }
-  let(:params) { instance_double('RackParams') }
-  let(:hash) { instance_double('Hash') }
-  # let(:response) { instance_double('Response', :parsed => parsed_response) }
+  subject(:strategy) { described_class.new({}) }
 
-  subject do
-    OmniAuth::Strategies::Asana.new({})
+  let(:access_token) { instance_double("AccessToken", :options => {}) }
+  let(:params) { instance_double("RackParams") }
+  let(:hash) { instance_double("Hash") }
+
+  before do
+    allow(strategy).to receive(:access_token).and_return(access_token)
   end
 
-  before(:each) do
-    allow(subject).to receive(:access_token).and_return(access_token)
-  end
+  describe "#options" do
+    describe "#client_options" do
+      it "has correct site" do
+        expect(strategy.options.client_options.site).to eq("https://app.asana.com")
+      end
 
-  context "client options" do
-    it 'should have correct site' do
-      expect(subject.options.client_options.site).to eq("https://app.asana.com")
-    end
+      it "has correct authorize url" do
+        expect(strategy.options.client_options.authorize_url).to eq("https://app.asana.com/-/oauth_authorize")
+      end
 
-    it 'should have correct authorize url' do
-      expect(subject.options.client_options.authorize_url).to eq('https://app.asana.com/-/oauth_authorize')
-    end
-
-    it 'should have correct token url' do
-      expect(subject.options.client_options.token_url).to eq('https://app.asana.com/-/oauth_token')
+      it "has correct token url" do
+        expect(strategy.options.client_options.token_url).to eq("https://app.asana.com/-/oauth_token")
+      end
     end
   end
 
-  context "#raw_info" do
-    it "should use params" do
+  describe "#raw_info" do
+    it "uses params" do
       allow(access_token).to receive(:params).and_return(params)
-      allow(params).to receive(:[]).with('data').and_return(hash)
+      allow(params).to receive(:[]).with("data").and_return(hash)
 
-      expect(subject.raw_info).to eq(hash)
+      expect(strategy.raw_info).to eq(hash)
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
